@@ -1,33 +1,31 @@
 $(function() {
-  $(".change-eaten").on("click", function(event) {
-    var id = $(this).data("id");
-    var newEaten = $(this).data("neweaten");
+  $(".change-eaten").on("click", (event) => {
+    let id = $(this).data("id");
+    let eaten = $(this).data("neweaten");
 
-    var newEatenState = {
-      eaten: newEaten
+    let condition = {
+      eaten: eaten
     };
 
-    $.ajax("/api/burgers/" + id, {
+    $.ajax(`/api/burgers/${id}`, {
       type: "PUT",
-      data: newEatenState
-    }).then(function() {
-      console.log("changed eaten to", newEaten);
+      data: condition
+    }).then(() => {
       location.reload();
     });
   });
 
-  $(".create-form").on("submit", function(event) {
+  $(".create-form").on("submit", (event) => {
     event.preventDefault();
 
-    var newBurger = {
+    let newBurger = {
       name: $("#burger").val().trim()
     };
 
     $.ajax("/api/burgers", {
       type: "POST",
       data: newBurger
-    }).then(function() {
-      console.log("Created new burger");
+    }).then(() => {
       location.reload();
     });
   });
