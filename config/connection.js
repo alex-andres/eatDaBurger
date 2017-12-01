@@ -4,11 +4,10 @@ const connection = mysql.createConnection({
   port: 3306,
   host: "localhost",
   user: "root",
-  password: "",
   database: "burger_db"
 });
 
-connection.connect(function(err) {
+connection.connect((err) => {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;

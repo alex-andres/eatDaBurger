@@ -1,32 +1,50 @@
-<div class='row'>
-  <div class='col-4'></div>
-  <div class='col-4'><h1>Eat-Da-Burger</h1></div>
-  <div class='col-4'></div>
-</div>
-<div class='row'>
-  <div class="col-6"> 
-    <h2>Burgers to Eat</h2>
-      <ul>
-        {{#each burgers}} {{#unless eaten }} {{> burgers/burger-block eaten=true}} {{/unless}} {{/each}}
-      </ul>
+<div class='container jumbotron'>
+  <div class='row'>
+    <div class='col-4'></div>
+    <div class='col-4'><h1>Eat-Da-Burger</h1></div>
+    <div class='col-4'></div>
   </div>
-  <div class="col-6">
-    <h2>Burgers that have been consumed!</h2>
-
-    <ul>
-      {{#each burgers}} {{#if eaten}} {{> burgers/burger-block eaten=false}} {{/if}} {{/each}}
-    </ul>
-  </div>
-</div?>
-<div class='row'></div>
-  <h2>Add a Burger</h2>
-  <form class="create-form">
-
-    <div class="form-group">
-      <label for="burger">Burger Name:</label>
-      <input type="text" id="burger" name="name">
+  <div class='row'>
+    <div class="col-6"> 
+      <h2>Burgers to Eat</h2>
+        <ul class='list-unstyled'>
+          {{#each burgers}} 
+            {{#unless eaten}}
+            <li>
+              {{this.name}}
+              <form action="burgers/updateOne{{this.id}}?_method=PUT" method="POST">
+                <input type='hidden' name='eaten' value='1'>
+                <button type='submit' class="btn btn-default">EAT</button>
+              </form>
+            </li>
+            {{/unless}} {{/each}}
+        </ul>
     </div>
+    <div class="col-6">
+      <h2>Burgers that have been consumed!</h2>
 
-    <button type="submit">Add Burger</button>
-  </form>
+      <ul class='list-unstyled'>
+        {{#each burgers}} 
+          {{#if eaten}} 
+          <li>
+            {{this.name}}
+            <form action="burgers/updateOne{{this.id}}?_method=PUT" method="POST">
+              <input type='hidden' name='eaten' value='0'>
+              <button type='submit' class="btn btn-default">No thanks</button>
+            </form>
+          </li>
+          {{/if}} 
+        {{/each}}
+      </ul>
+    </div>
+  </div?>
+  <div class='row'></div>
+    <h2>Add a Burger</h2> 
+    <form class="create-form" method="POST" action="burgers/createOne">
+      <div class="form-group">
+        <input type="text" id="burg" name="name">
+      </div>
+      <button type="submit" class="btn btn-default">Add Burger</button>
+    </form>
+  </div>
 </div>

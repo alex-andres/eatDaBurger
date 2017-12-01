@@ -12,27 +12,24 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/api/burgers', (req, res) => {
-  burger.create(req.params.name,(result) => {
-        if (result.changedRows == 0) {
-            return res.status(404).end();
-        } 
-        else {
-            res.status(200).end();
-        };
+router.post('/burgers/createOne', (req, res) => {
+  burger.createOne(["name"
+  ], [
+    req.body.name
+  ], function(result) {
+    res.redirect("/");
   });
 });
 
-router.put('/api/burger/:id', (req, res) =>{
+router.put('/burgers/updateOne:id', (req, res) =>{
   
-  var condition = req.body.condition;
+  let condition = "id = " + req.params.id;
+  console.log('condition' , condition)
 
-  burger.update(req.params.id, condition, result =>{ 
-      if (result.changedRows == 0) {
-        return res.status(404).end();
-      } else {
-        res.status(200).end();
-      }
+  burger.updateOne({    
+    eaten: req.body.eaten
+  }, condition, function(result) {
+    res.redirect("/");
   });
 });
 
